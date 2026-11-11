@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>11:11 ❤</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#2a0509;--bg2:#4a0a12;--card:#5c0d18;--line:#8f1d2c;--text:#ffe9ea;--soft:#e8b4b8;--glow:#ff4d63;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,var(--bg2),var(--bg) 70%) fixed;color:var(--text);font-family:'Cairo',Tahoma,sans-serif;text-align:center;overflow-x:hidden}
+.hearts{position:fixed;inset:0;pointer-events:none;z-index:0}
+.hearts span{position:absolute;bottom:-40px;color:var(--glow);opacity:.5;animation:rise linear infinite}
+@keyframes rise{to{transform:translateY(-110vh) rotate(25deg);opacity:0}}
+main{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:48px 20px 60px}
+.date{color:var(--soft);letter-spacing:2px;font-size:1rem}
+.time{font-size:clamp(4rem,22vw,8rem);font-weight:800;margin:6px 0;color:var(--text);text-shadow:0 0 30px var(--glow);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{50%{text-shadow:0 0 60px var(--glow),0 0 10px var(--glow)}}
+h1{font-family:'Amiri',serif;font-weight:700;font-size:clamp(1.6rem,6vw,2.4rem);margin:0 0 6px}
+.sub{color:var(--soft);margin:0 0 22px}
+.count{display:inline-block;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px 22px;font-weight:600;min-width:240px}
+section{margin-top:54px}
+h2{font-family:'Amiri',serif;font-size:1.7rem;margin:0 0 18px;color:var(--soft)}
+.msgs{display:grid;gap:14px}
+.msg{background:linear-gradient(160deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:20px;padding:20px 22px;font-family:'Amiri',serif;font-size:1.3rem;line-height:1.9;text-align:right}
+.photos{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.slot{position:relative;aspect-ratio:3/4;border:2px dashed var(--line);border-radius:20px;background:var(--card);cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;color:var(--soft);font-size:.95rem}
+.slot:first-child{grid-column:1/-1;aspect-ratio:4/3}
+.slot span.plus{font-size:2.4rem;line-height:1;color:var(--glow)}
+.slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
+.slot input{display:none}
+.slot.has{border-style:solid}
+.hint{font-size:.85rem;color:var(--soft);margin-top:10px}
+.wish{margin-top:54px;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:28px 20px}
+button{font:inherit;font-weight:600;background:var(--glow);color:#2a0509;border:0;border-radius:30px;padding:12px 28px;cursor:pointer}
+#wishText{margin-top:16px;font-family:'Amiri',serif;font-size:1.4rem;line-height:1.9;min-height:1em}
+footer{margin-top:50px;color:var(--soft);font-family:'Amiri',serif;font-size:1.2rem}
+</style>
+</head>
+<body>
+<div class="hearts" id="hearts"></div>
+<main>
+  <div class="date">١١ • ١١ • ٢٠٢٦</div>
+  <div class="time">11:11</div>
+  <h1>اطلبي أمنية يا قلبي ❤</h1>
+  <p class="sub">والأمنية بتاعتي إنك تفضلي معايا دايمًا</p>
+  <div class="count" id="count">…</div>
+
+  <section>
+    <h2>كلمتين من قلبي</h2>
+    <div class="msgs">
+      <div class="msg">في كل مرة بشوف فيها 11:11 بفتكرك، وبدعي إن ربنا يجمعنا على الخير دايمًا.</div>
+      <div class="msg">إنتي مش بس حبيبتي، إنتي أمانتي وراحتي والحاجة الحلوة الوحيدة اللي مفيهاش عيب.</div>
+      <div class="msg">لو الأيام كلها زي يوم ١١/١١ ، هختارك فيها كلها من تاني.</div>
+      <div class="msg">بحبك بكل اللي فيا، وبكرة أحبك أكتر من النهارده.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>ذكرياتنا</h2>
+    <div class="photos" id="photos"></div>
+    <div class="hint">دوسي على أي مربع عشان تختاري صورة</div>
+  </section>
+
+  <div class="wish">
+    <button id="wishBtn">اطلبي أمنية ✨</button>
+    <div id="wishText"></div>
+  </div>
+
+  <footer>دايمًا ليكي… ❤</footer>
+</main>
+<script>
+(function(){
+  // floating hearts
+  var h=document.getElementById('hearts');
+  for(var i=0;i<22;i++){var s=document.createElement('span');s.textContent='❤';
+    s.style.left=Math.random()*100+'%';s.style.fontSize=(10+Math.random()*22)+'px';
+    s.style.animationDuration=(8+Math.random()*10)+'s';s.style.animationDelay=(-Math.random()*14)+'s';h.appendChild(s);}
+
+  // countdown to 11:11
+  var c=document.getElementById('count');
+  function tick(){
+    var n=new Date(),t=new Date(n.getFullYear(),10,11,11,11,0);
+    var isDay=n.getMonth()===10&&n.getDate()===11;
+    var d=t-n;
+    if(isDay&&d>0){var m=Math.floor(d/60000),s=Math.floor(d%60000/1000);
+      c.textContent='فاضل '+Math.floor(m/60)+' ساعة و '+(m%60)+' دقيقة و '+s+' ثانية على 11:11';}
+    else if(isDay&&d>-60000){c.textContent='دلوقتي 11:11 ✨ اطلبي أمنية';}
+    else if(isDay){c.textContent='عدّى 11:11 النهارده، وأمنيتي ليكي لسه مكمّلة ❤';}
+    else{c.textContent='كل يوم معاكي هو 11:11 ❤';}
+  }
+  tick();setInterval(tick,1000);
+
+  // photo slots
+  var box=document.getElementById('photos');
+  function store(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  function load(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function show(slot,src){var im=slot.querySelector('img')||document.createElement('img');im.src=src;slot.appendChild(im);slot.classList.add('has');}
+  for(let i=0;i<5;i++){
+    let slot=document.createElement('label');slot.className='slot';
+    slot.innerHTML='<span class="plus">+</span><span>صورة '+(i+1)+'</span><input type="file" accept="image/*">';
+    box.appendChild(slot);
+    let saved=load('photo'+i);if(saved)show(slot,saved);
+    // صور الـ repo (photos/1.jpg ... 5.jpg) لها الأولوية لو موجودة
+    (function(){var t=new Image();t.onload=function(){show(slot,t.src);slot.querySelector('input').disabled=true;slot.style.cursor='default';};t.src='photos/'+(i+1)+'.jpg';})();
+    slot.querySelector('input').addEventListener('change',function(e){
+      var f=e.target.files[0];if(!f)return;
+      var r=new FileReader();r.onload=function(){
+        var img=new Image();img.onload=function(){
+          var max=900,sc=Math.min(1,max/Math.max(img.width,img.height));
+          var cv=document.createElement('canvas');cv.width=img.width*sc;cv.height=img.height*sc;
+          cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);
+          var url=cv.toDataURL('image/jpeg',.8);show(slot,url);store('photo'+i,url);
+        };img.src=r.result;
+      };r.readAsDataURL(f);
+    });
+  }
+
+  // wishes
+  var wishes=['أمنيتي إننا نفضل سوا العمر كله.','أتمنى كل ضحكة ليكي تفضل معاكي.','يا رب أكون سبب في فرحتك دايمًا.','أتمنى نشوف 11:11 سوا كل سنة.','أمنيتي تبقي دايمًا بخير وقلبك مطمن.'];
+  var wi=0;
+  document.getElementById('wishBtn').onclick=function(){
+    document.getElementById('wishText').textContent='✨ '+wishes[wi++%wishes.length]+' ✨';
+  };
+})();
+</script>
+</body>
+</html>
